@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 
 import me.nerdoron.security.Global;
-import me.nerdoron.security.modules.info.InfoCommand;
+import me.nerdoron.security.modules.information.HelpCommand;
+import me.nerdoron.security.modules.information.InfoCommand;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -17,6 +18,7 @@ public class BotCommandsHandler extends ListenerAdapter {
     public BotCommandsHandler(EventWaiter waiter) {
         Global.COMMANDS_HANDLER = this;
         commands.add(new InfoCommand());
+        commands.add(new HelpCommand(this));
         // commands.add(new Class());
 
     }
@@ -44,9 +46,9 @@ public class BotCommandsHandler extends ListenerAdapter {
         switch (category) {
             case "admin":
                 return "⚙️ Administration Commands";
-            case "moderation":
+            case "mod":
                 return "🛡️ Moderation Commands";
-            case "info":
+            case "information":
                 return "ℹ️ Informative Commands";
             default:
                 return null;

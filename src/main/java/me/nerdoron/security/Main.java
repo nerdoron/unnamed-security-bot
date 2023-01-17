@@ -29,6 +29,7 @@ public class Main {
                     GatewayIntent.GUILD_VOICE_STATES,
                     GatewayIntent.GUILD_PRESENCES)
                     .enableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS)
+                    .disableCache(CacheFlag.SCHEDULED_EVENTS)
                     .build();
             logger.info("Logged in as " + jda.getSelfUser().getAsTag());
             jda.getPresence().setActivity(Activity.watching("Your server. | /info"));

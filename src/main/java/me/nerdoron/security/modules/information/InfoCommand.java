@@ -1,4 +1,4 @@
-package me.nerdoron.security.modules.info;
+package me.nerdoron.security.modules.information;
 
 import java.lang.management.ManagementFactory;
 
