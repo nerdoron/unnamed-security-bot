@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 
 import me.nerdoron.security.Global;
+import me.nerdoron.security.modules.admin.SetupCommand;
 import me.nerdoron.security.modules.information.HelpCommand;
 import me.nerdoron.security.modules.information.InfoCommand;
 import net.dv8tion.jda.api.JDA;
@@ -19,6 +20,7 @@ public class BotCommandsHandler extends ListenerAdapter {
         Global.COMMANDS_HANDLER = this;
         commands.add(new InfoCommand());
         commands.add(new HelpCommand(this));
+        commands.add(new SetupCommand());
         // commands.add(new Class());
 
     }
