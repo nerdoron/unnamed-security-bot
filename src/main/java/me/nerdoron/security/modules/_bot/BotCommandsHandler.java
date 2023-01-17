@@ -10,6 +10,7 @@ import me.nerdoron.security.modules.admin.SettingsCommand;
 import me.nerdoron.security.modules.admin.SetupCommand;
 import me.nerdoron.security.modules.information.HelpCommand;
 import me.nerdoron.security.modules.information.InfoCommand;
+import me.nerdoron.security.modules.mod.RaidModeCommand;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -25,6 +26,7 @@ public class BotCommandsHandler extends ListenerAdapter {
         commands.add(new SetupCommand());
         commands.add(new SettingsCommand());
         commands.add(new ModifySettingsCommand());
+        commands.add(new RaidModeCommand());
         // commands.add(new Class());
 
     }
