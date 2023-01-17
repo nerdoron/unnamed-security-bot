@@ -103,7 +103,7 @@ public class SetupCommand extends SlashCommand {
 
         @Override
         public SlashCommandData getSlash() {
-                SlashCommandData setup = Commands.slash("setup", "Setup unnamed bot.");
+                SlashCommandData setup = Commands.slash("setup", "Setup your guild.");
                 setup.addOption(OptionType.CHANNEL, "alertchannel", "The channels where OneWay alerts will be shown.",
                                 true);
                 setup.addOption(OptionType.ROLE, "modrole", "The Moderator role in your server.", true);

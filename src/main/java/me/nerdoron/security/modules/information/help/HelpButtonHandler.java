@@ -5,7 +5,6 @@ import me.nerdoron.security.modules._bot.SlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 public class HelpButtonHandler extends ListenerAdapter {
     HelpEmbeds helpEmbeds = new HelpEmbeds();
@@ -29,13 +28,7 @@ public class HelpButtonHandler extends ListenerAdapter {
             if (!command.getCategory().equals(buttonCategory))
                 continue;
 
-            String options = " ";
-            for (OptionData option : command.getSlash().getOptions()) {
-                options += "[" + option.getName() + "] ";
-            }
-
-            String commandName = command.getSlash().getName() + options;
-            commandName = commandName.trim();
+            String commandName = command.getSlash().getName();
 
             embedDescription += "`/" + commandName + "` - ";
             embedDescription += command.getSlash().getDescription() + "\n";
