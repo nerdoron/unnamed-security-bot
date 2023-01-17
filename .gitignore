@@ -1,0 +1,8 @@
+.env
+
+.vscode/
+.settings/
+target/
+
+*.jar
+
