@@ -18,13 +18,13 @@ import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 public class SetupCommand extends SlashCommand {
         SettingsSQL settingsSQL = new SettingsSQL();
-        static int error = 0;
 
         @Override
         public void execute(SlashCommandInteractionEvent event) {
-                if (!(event.getMember().hasPermission(Permission.ADMINISTRATOR)))
-                        return;
+                int error = 0;
                 String guildId = event.getGuild().getId();
+                SettingsCommand settingsCommand = new SettingsCommand();
+
                 if (settingsSQL.isGuildSetup(guildId)) {
                         event.reply("The guild is already setup! To change a setting use `/modifysetting [setting]`")
                                         .setEphemeral(true).queue();
@@ -51,6 +51,17 @@ public class SetupCommand extends SlashCommand {
                 // autoScan
                 Boolean autoScan = event.getInteraction().getOption("autoscan").getAsBoolean();
 
+                if (error > 0) {
+                        handleError(event, error);
+                        return;
+                }
+
+                settingsSQL.setupGuild(guildId, alertsChannelId, modRoleId, pingMods, autoScan);
+
+                event.replyEmbeds(settingsCommand.getSettingsEmbed(guildId, event)).setEphemeral(true).queue();
+        }
+
+        private void handleError(SlashCommandInteractionEvent event, int error) {
                 switch (error) {
                         case 1:
                                 MessageEmbed channelErrorEmbed = new EmbedBuilder()
@@ -60,8 +71,7 @@ public class SetupCommand extends SlashCommand {
                                                 .setColor(Color.red)
                                                 .build();
                                 event.replyEmbeds(channelErrorEmbed).setEphemeral(true).queue();
-                                error = 0;
-                                return;
+                                break;
                         case 2:
                                 MessageEmbed roleErrorEmbed = new EmbedBuilder()
                                                 .setTitle("Error!")
@@ -70,8 +80,7 @@ public class SetupCommand extends SlashCommand {
                                                 .setColor(Color.red)
                                                 .build();
                                 event.replyEmbeds(roleErrorEmbed).setEphemeral(true).queue();
-                                error = 0;
-                                return;
+                                break;
                         case 3:
                                 MessageEmbed multiErrorEmbed = new EmbedBuilder()
                                                 .setTitle("Multiple Errors detected!")
@@ -80,25 +89,8 @@ public class SetupCommand extends SlashCommand {
                                                 .setColor(Color.red)
                                                 .build();
                                 event.replyEmbeds(multiErrorEmbed).setEphemeral(true).queue();
-                                error = 0;
-                                return;
-                        case 0:
                                 break;
                 }
-
-                settingsSQL.setupGuild(guildId, alertsChannelId, modRoleId, pingMods, autoScan);
-                MessageEmbed settingsEmbed = new EmbedBuilder()
-                                .setTitle("Guild Settings")
-                                .setThumbnail(event.getGuild().getIconUrl())
-                                .setDescription("Settings for guild `" + event.getGuild().getName() + "`:")
-                                .addField("Alerts Channel", channel.getAsMention(), false)
-                                .addField("Mod Role", role.getAsMention(), false)
-                                .addField("Ping Mods on Alert", String.valueOf(pingMods), false)
-                                .addField("Auto-Scan", String.valueOf(autoScan), false)
-                                .setColor(Global.embedColor)
-                                .build();
-
-                event.replyEmbeds(settingsEmbed).setEphemeral(true).queue();
         }
 
         @Override
