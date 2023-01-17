@@ -6,3 +6,5 @@ target/
 
 *.jar
 
+db.db
+db.db-journal
